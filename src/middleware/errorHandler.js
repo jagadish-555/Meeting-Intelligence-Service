@@ -1,6 +1,6 @@
-const logger = require("../config/logger");
+import logger from "../config/logger.js";
 
-module.exports = (err, req, res, next) => {
+export default (err, req, res, next) => {
   const traceId = res.locals.traceId;
 
   logger.error({
