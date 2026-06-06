@@ -13,3 +13,11 @@ All notable changes to this project will be documented in this file.
 - **Global Error Handling:** Implemented a structured global error-handling mechanism (`src/middleware/errorHandler.js`) to intercept application errors and return consistent HTTP responses.
 - **Request Logging:** Added a custom request logging middleware (`src/middleware/requestLogger.js`) to capture incoming HTTP request details for debugging and monitoring.
 - **Request Traceability:** Added a trace ID middleware (`src/middleware/traceId.js`) that attaches a unique identifier to every request, improving the ability to track request life cycles in logs.
+
+## [Milestone 2] - Authentication
+
+### Added
+
+- **User Registration & Login:** Implemented endpoints for user registration (`/api/auth/register`) and login (`/api/auth/login`).
+- **Authentication Middleware:** Added JWT-based authentication middleware (`src/middleware/auth.js`) to protect secure routes.
+- **API Documentation:** Added Swagger documentation for all authentication endpoints.
