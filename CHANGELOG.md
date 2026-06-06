@@ -21,3 +21,12 @@ All notable changes to this project will be documented in this file.
 - **User Registration & Login:** Implemented endpoints for user registration (`/api/auth/register`) and login (`/api/auth/login`).
 - **Authentication Middleware:** Added JWT-based authentication middleware (`src/middleware/auth.js`) to protect secure routes.
 - **API Documentation:** Added Swagger documentation for all authentication endpoints.
+
+## [Milestone 3] - Core Features & AI Integration
+
+### Added
+
+- **AI Transcript Analysis:** Implemented an AI service (`src/services/aiService.js`) integrating Groq LLM with Zod validation to strictly enforce JSON schemas for transcript analysis.
+- **Meeting Endpoints:** Implemented endpoints for creating (`/api/meetings`), listing (`/api/meetings`), fetching details (`/api/meetings/:id`), and triggering AI transcript analysis (`/api/meetings/:id/analyze`).
+- **Action Item Endpoints:** Implemented endpoints for creating (`/api/action-items`), listing (`/api/action-items`), fetching overdue items (`/api/action-items/overdue`), and updating statuses (`/api/action-items/:id/status`).
+- **API Documentation:** Added Swagger OpenAPI documentation for the meeting and action items endpoints.
