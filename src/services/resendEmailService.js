@@ -6,7 +6,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 export const sendActionItemReminderEmail = async (item) => {
     try {
         const data = await resend.emails.send({
-            from: 'Meeting Intelligence <onboarding@resend.dev>',
+            from: 'Meeting Intelligence <notifications@reminders.jagadish-patil.me>',
             to: [item.assignee],
             subject: `Overdue Action Item: ${item.task}`,
             html: `

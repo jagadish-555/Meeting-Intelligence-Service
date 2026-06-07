@@ -30,3 +30,16 @@ All notable changes to this project will be documented in this file.
 - **Meeting Endpoints:** Implemented endpoints for creating (`/api/meetings`), listing (`/api/meetings`), fetching details (`/api/meetings/:id`), and triggering AI transcript analysis (`/api/meetings/:id/analyze`).
 - **Action Item Endpoints:** Implemented endpoints for creating (`/api/action-items`), listing (`/api/action-items`), fetching overdue items (`/api/action-items/overdue`), and updating statuses (`/api/action-items/:id/status`).
 - **API Documentation:** Added Swagger OpenAPI documentation for the meeting and action items endpoints.
+
+## [Milestone 4] - Reminders & Email Notifications
+
+### Added
+
+- **Email Notifications:** created notification systems with the Resend API to send action item reminders via email (`src/services/resendEmailService.js`).
+- **Smart Due Date Extraction:** Enhanced the Groq AI prompt (`src/services/aiService.js`) to parse and resolve relative due dates from meeting transcripts and persist them to the database.
+- **Background Scheduler:** Configured a `node-cron` scheduled background job (`src/jobs/reminderJob.js`) to automatically find overdue action items and trigger email reminders every morning at 8:00 AM.
+- **Rate Limiting Protection:** Added deliberate processing delays in the `reminderService.js` loop to safely comply with Resend's free-tier rate limits.
+
+### Changed
+
+- **Custom Sender Email:** Updated the Resend configuration to send emails from a verified custom domain instead of the default testing address because of Resend's restrictions which allowed sending emails only to verified recipients.
