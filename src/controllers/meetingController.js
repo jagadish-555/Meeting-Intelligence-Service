@@ -101,7 +101,7 @@ const analyzeMeeting = async (req, res, next) => {
     });
     if (existing) return success(res, { analysis: existing });
 
-    const analysis = await aiService.analyzeMeeting(meeting.transcript);
+    const analysis = await aiService.analyzeMeeting(meeting.transcript, meeting.meetingDate);
 
     const [savedAnalysis] = await prisma.$transaction([
       prisma.meetingAnalysis.create({
@@ -119,6 +119,7 @@ const analyzeMeeting = async (req, res, next) => {
             meetingId: meeting.id,
             task: item.task,
             assignee: item.assignee,
+            dueDate: item.dueDate ? new Date(item.dueDate) : null,
             citations: item.citations || [],
             status: "PENDING",
           },

@@ -22,6 +22,7 @@ const analysisSchema = z.object({
       z.object({
         task: z.string(),
         assignee: z.string().optional(),
+        dueDate: z.string().nullable().optional(),
         citations: z.array(citationSchema).optional(),
       })
     )
@@ -47,8 +48,11 @@ const analysisSchema = z.object({
     .default([]),
 });
 
-const analyzeMeeting = async (transcript) => {
+const analyzeMeeting = async (transcript, meetingDate) => {
   const validTimestamps = transcript.map((e) => e.timestamp);
+  const meetingDateStr = meetingDate
+    ? new Date(meetingDate).toISOString().split('T')[0]
+    : new Date().toISOString().split('T')[0];
 
   const transcriptText = transcript
     .map((e) => `[${e.timestamp}] ${e.speaker}: ${e.text}`)
@@ -62,6 +66,8 @@ STRICT RULES — YOU MUST FOLLOW THESE:
 3. Every item MUST include at least one citation referencing an actual timestamp.
 4. Valid timestamps you may cite: ${JSON.stringify(validTimestamps)}
 5. If something is not clearly mentioned, do not include it.
+6. The meeting took place on: ${meetingDateStr}. Use this as the reference date when resolving relative due dates like "by Friday", "next week", "end of month", etc.
+7. For each action item, extract a dueDate if any deadline is mentioned (explicitly or relatively). Return it as an ISO 8601 date string (YYYY-MM-DD). If no due date is mentioned, set dueDate to null.
 
 TRANSCRIPT:
 ${transcriptText}
@@ -72,7 +78,7 @@ Respond ONLY with a JSON object in this exact structure, no markdown, no explana
     { "text": "concise summary point", "citations": [{ "timestamp": "MM:SS" }] }
   ],
   "actionItems": [
-    { "task": "specific task", "assignee": "person name", "citations": [{ "timestamp": "MM:SS" }] }
+    { "task": "specific task", "assignee": "person name", "dueDate": "YYYY-MM-DD or null", "citations": [{ "timestamp": "MM:SS" }] }
   ],
   "decisions": [
     { "text": "decision made", "citations": [{ "timestamp": "MM:SS" }] }
