@@ -39,10 +39,10 @@ Create a `.env` file in the root directory based on `.env.example`:
 ```env
 PORT=3000
 DATABASE_URL="postgresql://user:password@localhost:5432/meeting_intelligence?schema=public"
-JWT_SECRET="your-super-secret-jwt-key"
+JWT_SECRET="super-secret-jwt-key"
 JWT_EXPIRES_IN="7d"
-GROQ_API_KEY="your-groq-api-key"
-RESEND_API_KEY="your-resend-api-key"
+GROQ_API_KEY="groq-api-key"
+RESEND_API_KEY="resend-api-key"
 ```
 
 ### 4. Database Setup
