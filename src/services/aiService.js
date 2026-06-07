@@ -21,7 +21,7 @@ const analysisSchema = z.object({
     .array(
       z.object({
         task: z.string(),
-        assignee: z.string().optional(),
+        assignee: z.string().email().optional(),
         dueDate: z.string().nullable().optional(),
         citations: z.array(citationSchema).optional(),
       })
@@ -48,7 +48,7 @@ const analysisSchema = z.object({
     .default([]),
 });
 
-const analyzeMeeting = async (transcript, meetingDate) => {
+const analyzeMeeting = async (transcript, meetingDate, participants = []) => {
   const validTimestamps = transcript.map((e) => e.timestamp);
   const meetingDateStr = meetingDate
     ? new Date(meetingDate).toISOString().split('T')[0]
@@ -68,6 +68,7 @@ STRICT RULES — YOU MUST FOLLOW THESE:
 5. If something is not clearly mentioned, do not include it.
 6. The meeting took place on: ${meetingDateStr}. Use this as the reference date when resolving relative due dates like "by Friday", "next week", "end of month", etc.
 7. For each action item, extract a dueDate if any deadline is mentioned (explicitly or relatively). Return it as an ISO 8601 date string (YYYY-MM-DD). If no due date is mentioned, set dueDate to null.
+8. The "assignee" for an action item MUST be an exact email address chosen from this list of participants: ${JSON.stringify(participants)}. If the assignee is not clearly identifiable from this list, set assignee to null.
 
 TRANSCRIPT:
 ${transcriptText}

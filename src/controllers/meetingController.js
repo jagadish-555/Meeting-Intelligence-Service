@@ -15,7 +15,7 @@ const createMeetingSchema = z.object({
   participants: z
     .array(z.string().email("Invalid participant email"))
     .min(1, "At least one participant required"),
-  meetingDate: z.string().datetime("Invalid meeting date"),
+  meetingDate: z.coerce.date({ errorMap: () => ({ message: "Invalid meeting date format" }) }),
   transcript: z
     .array(transcriptEntrySchema)
     .min(1, "Transcript cannot be empty"),
@@ -38,7 +38,7 @@ const createMeeting = async (req, res, next) => {
       data: {
         title,
         participants,
-        meetingDate: new Date(meetingDate),
+        meetingDate,
         transcript,
         createdBy: req.user.id,
       },
@@ -101,7 +101,11 @@ const analyzeMeeting = async (req, res, next) => {
     });
     if (existing) return success(res, { analysis: existing });
 
-    const analysis = await aiService.analyzeMeeting(meeting.transcript, meeting.meetingDate);
+    const analysis = await aiService.analyzeMeeting(
+      meeting.transcript,
+      meeting.meetingDate,
+      meeting.participants
+    );
 
     const [savedAnalysis] = await prisma.$transaction([
       prisma.meetingAnalysis.create({

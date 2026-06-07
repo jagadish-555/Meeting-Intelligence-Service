@@ -43,3 +43,4 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - **Custom Sender Email:** Updated the Resend configuration to send emails from a verified custom domain instead of the default testing address because of Resend's restrictions which allowed sending emails only to verified recipients.
+- **Strict Assignee Parsing:** Modified the AI prompt (`aiService.js`) to cross-reference extracted assignees against the meeting's participants array, ensuring the generated `assignee` is always a valid email address rather than a raw name.

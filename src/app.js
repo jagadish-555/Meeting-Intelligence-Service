@@ -2,7 +2,6 @@ import express from "express";
 import cors from "cors";
 import routes from "./routes/index.js";
 import errorHandler from "./middleware/errorHandler.js";
-import authMiddleware from "./middleware/auth.js";
 import traceId from "./middleware/traceId.js";
 import requestLogger from "./middleware/requestLogger.js";
 import { setupSwagger } from "./config/swagger.js";
