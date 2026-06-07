@@ -1,11 +1,16 @@
 import request from "supertest";
 import "dotenv/config";
-import app from "../src/app";
-import prisma from "../src/config/db";
+import app from "../src/app.js";
+import prisma from "../src/config/db.js";
 
 beforeAll(async () => {
   await prisma.user.deleteMany({
-    where: { email: { contains: "_test_" } },
+    where: {
+      OR: [
+        { email: { startsWith: "user_test_" } },
+        { email: { startsWith: "login_test_" } },
+      ],
+    },
   });
 });
 

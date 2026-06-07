@@ -24,8 +24,13 @@ const createMeetingSchema = z.object({
 const createMeeting = async (req, res, next) => {
   try {
     const parsed = createMeetingSchema.safeParse(req.body);
-    if (!parsed.success)
-      throw new ValidationError(parsed.error.errors[0].message);
+    if (!parsed.success) {
+      const errorMsg =
+        parsed.error?.issues?.[0]?.message ||
+        parsed.error?.errors?.[0]?.message ||
+        "Validation Error";
+      throw new ValidationError(errorMsg);
+    }
 
     const { title, participants, meetingDate, transcript } = parsed.data;
 
