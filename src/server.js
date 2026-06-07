@@ -12,7 +12,6 @@ const start = async () => {
     logger.info("Connected to the database successfully.");
 
     startReminderJob();
-    logger.info("Background reminder job scheduled.");
 
     app.listen(PORT, () => {
       logger.info(`Server is running on port ${PORT}`);
